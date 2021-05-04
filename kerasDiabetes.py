@@ -80,27 +80,28 @@ model.add(Dense(2, activation='softmax'))
 
 # Compile the model
 model.compile(optimizer='adam', 
-              loss='categorical_crossentropy', 
+              loss='binary_crossentropy', 
               metrics=['accuracy'])
-history=model.fit(X_train, y_train, epochs=200,validation_split=0.33)
+history=model.fit(X_train, y_train, epochs=200)
 
-print(history.history.keys())
-# summarize history for accuracy
-plt.plot(history.history['accuracy'])
-plt.plot(history.history['val_accuracy'])
-plt.title('model accuracy')
-plt.ylabel('accuracy')
-plt.xlabel('epoch')
-plt.legend(['train', 'test'], loc='upper left')
-plt.show()
-# summarize history for loss
-plt.plot(history.history['loss'])
-plt.plot(history.history['val_loss'])
-plt.title('model loss')
-plt.ylabel('loss')
-plt.xlabel('epoch')
-plt.legend(['train', 'test'], loc='upper left')
-plt.show()
+# print(history.history.keys())
+# # summarize history for accuracy
+# plt.plot(history.history['accuracy'])
+# plt.plot(history.history['val_accuracy'])
+# plt.title('model accuracy')
+# plt.ylabel('accuracy')
+# plt.xlabel('epoch')
+# plt.legend(['train', 'test'], loc='upper left')
+# plt.show()
+# # summarize history for loss
+# plt.plot(history.history['loss'])
+# plt.plot(history.history['val_loss'])
+# plt.title('model loss')
+# plt.ylabel('loss')
+# plt.xlabel('epoch')
+# plt.legend(['train', 'test'], loc='upper left')
+# plt.show()
+
 
 pred_train= model.predict(X_train)
 scores = model.evaluate(X_train, y_train, verbose=0)
@@ -109,3 +110,16 @@ print('Accuracy on training data: {}% \n Error on training data: {}'.format(scor
 pred_test= model.predict(X_test)
 scores2 = model.evaluate(X_test, y_test, verbose=0)
 print('Accuracy on test data: {}% \n Error on test data: {}'.format(scores2[1], 1 - scores2[1]))    
+#predictions = model.predict_classes(X)
+# summarize the first 5 cases
+# for i in range(5):
+# 	print('%s => %d (expected %s)' % (X_test[i].tolist(), pred_test[i], y_test[i].tolist()))
+
+pred_test= model.predict(X)
+scores2 = model.evaluate(X, y, verbose=0)
+print('Accuracy on test data: {}% \n Error on test data: {}'.format(scores2[1], 1 - scores2[1]))    
+    
+
+print('Accuracy on test data: {}% \n Error on test data: {}'.format(scores2[1], 1 - scores2[1]))   
+for i in range(5):
+	print(str(X[i].tolist())+"->  " +str(pred_test[i])+"  expected: "+str(y[i].tolist()))
